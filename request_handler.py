@@ -1,7 +1,8 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from urllib.parse import urlparse, parse_qs
 import json
+from views import create_user, login_user, get_all_posts
 
-from views import create_user, login_user
 
 
 
@@ -51,8 +52,37 @@ class HandleRequests(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        """Handle Get requests to the server"""
-        pass
+        
+        success = False
+        
+        response = ""  # Default response
+
+        # Parse URL and store entire tuple in a variable
+        parsed = self.parse_url()
+
+        # If the path does not include a query parameter, continue with the original if block
+        if '?' not in self.path:
+            (resource, id) = parsed 
+        
+            if resource == "post":
+                if id is not None:
+                    response = get_single_post(id)
+                    success = True
+            else:
+                response = get_all_posts()
+                success = True
+
+
+        else:  # There is a ? in the path, run the query param functions
+                (resource, query) = parsed
+
+            
+        if success:
+            self._set_headers(200)
+        else:
+            self._set_headers(404)
+
+        self.wfile.write(json.dumps(response).encode())
 
 
     def do_POST(self):
