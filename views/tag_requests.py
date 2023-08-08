@@ -20,7 +20,8 @@ def get_all_tags():
         SELECT
             t.id,
             t.label
-        FROM Tags AS t;""")
+        FROM Tags AS t
+        ORDER BY label ASC;""")
 
     tags = []
 
