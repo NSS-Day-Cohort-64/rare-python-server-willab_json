@@ -39,7 +39,7 @@ CREATE TABLE "Posts" (
   "image_url" varchar,
   "content" varchar,
   "approved" bit,
-  FOREIGN KEY(`user_id`) REFERENCES `Users`(`id`),
+  FOREIGN KEY(`user_id`) REFERENCES `Users`(`id`)
 );
 
 CREATE TABLE "Comments" (
@@ -101,7 +101,7 @@ VALUES
     (3, 2, 'Sample Post 7', '2023-08-01', 'https://example.com/image7.jpg', 'This is the content of Sample Post 7.', 0),
     (4, 1, 'Sample Post 8', '2023-07-31', 'https://example.com/image8.jpg', 'This is the content of Sample Post 8.', 1),
     (1, 3, 'Sample Post 9', '2023-07-30', 'https://example.com/image9.jpg', 'This is the content of Sample Post 9.', 1),
-    (2, 2, 'Sample Post 10', '2023-07-29', 'https://example.com/image10.jpg', 'This is the content of Sample Post 10.', 1),
+    (2, 2, 'Sample Post 10', '2023-07-29', 'https://example.com/image10.jpg', 'This is the content of Sample Post 10.', 1);
 
 INSERT INTO `Posts` (user_id, category_id, title, publication_date, image_url, content, approved)
 VALUES
