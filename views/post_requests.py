@@ -112,3 +112,8 @@ def get_single_post(id):
                         data['username'], data['password'], data['profile_image_url'], data['created_on'], data['active'])
         category = Category(data['category_id'], data['category_label'])
 
+        post.user = user.__dict__
+        post.category = category.__dict__
+
+        return post.__dict__
+
