@@ -18,7 +18,7 @@ def get_all_tags():
 
         db_cursor.execute("""
         SELECT
-            t.id
+            t.id,
             t.label
         FROM Tags AS t;""")
 
@@ -29,3 +29,5 @@ def get_all_tags():
     for row in dataset:
         tag = Tag(row['id'], row['label'])
         tags.append(tag.__dict__)
+    
+    return tags
