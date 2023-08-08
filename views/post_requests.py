@@ -6,7 +6,7 @@ POST = [
 
 
 ]
-    
+
 
 def get_all_posts():
     # Open a connection to the database
