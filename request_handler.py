@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
 import json
-from views import create_user, login_user, get_all_posts, get_single_post, get_all_categories, get_all_tags
+from views import create_user, login_user, get_all_posts, get_single_post, create_post, get_all_categories, get_all_tags
 
 
 
