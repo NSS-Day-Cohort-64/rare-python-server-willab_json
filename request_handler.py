@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
 import json
-from views import create_user,create_new_category,login_user, get_all_posts, get_single_post, get_all_categories, get_all_tags
+from views import create_user,create_new_category,login_user, get_all_posts, get_single_post, create_post, get_all_categories, get_all_tags
 
 
 
@@ -115,6 +115,9 @@ class HandleRequests(BaseHTTPRequestHandler):
             self.wfile.write(response.encode())
         if resource == 'categories':
             response = create_new_category(post_body)
+            self.wfile.write(json.dumps(response).encode())
+        if resource == 'posts':
+            response = create_post(post_body)
             self.wfile.write(json.dumps(response).encode())
 
     def do_PUT(self):
