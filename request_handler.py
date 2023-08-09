@@ -109,10 +109,13 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == 'login':
             response = login_user(post_body)
+            self.wfile.write(response.encode())
         if resource == 'register':
             response = create_user(post_body)
-
-        self.wfile.write(response.encode())
+            self.wfile.write(response.encode())
+        if resource == 'categories':
+            response = create_new_category(post_body)
+            self.wfile.write(json.dumps(response).encode())
 
     def do_PUT(self):
         """Handles PUT requests to the server"""
