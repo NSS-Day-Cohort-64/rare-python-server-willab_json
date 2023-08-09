@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
 import json
-from views import create_user, login_user, get_all_posts, get_single_post, get_all_categories, get_all_tags
+from views import create_user,create_new_category,login_user, get_all_posts, get_single_post, get_all_categories, get_all_tags
 
 
 
@@ -100,19 +100,45 @@ class HandleRequests(BaseHTTPRequestHandler):
 
 
     def do_POST(self):
-        """Make a post request to the server"""
-        self._set_headers(201)
         content_len = int(self.headers.get('content-length', 0))
-        post_body = json.loads(self.rfile.read(content_len))
-        response = ''
+        post_body = self.rfile.read(content_len)
+        
+        # convert JSON string to a python dictionary
+        post_body = json.loads(post_body)
+
+        success = False
+
+        #parse the URL
         resource, _ = self.parse_url()
 
-        if resource == 'login':
-            response = login_user(post_body)
-        if resource == 'register':
-            response = create_user(post_body)
+        #initialize new
+        new_category = None
+        new_login = None
+        new_user = None
 
-        self.wfile.write(response.encode())
+        if resource == 'categories':
+            new_category = create_new_category(post_body)
+            success = True
+
+        if resource == 'login':
+            new_login = login_user(post_body)
+            success = True
+
+        if resource == 'register':
+            new_user = create_user(post_body)
+            success = True
+
+        if success:
+            self._set_headers(201)
+                        # Encode the new animal and send in response
+            self.wfile.write(json.dumps(new_category).encode())
+            self.wfile.write(json.dumps(new_login).encode())
+            self.wfile.write(json.dumps(new_user).encode())
+        else:
+            self._set_headers(404)
+            error = ""
+            self.wfile.write(json.dumps(error).encode())
+
 
     def do_PUT(self):
         """Handles PUT requests to the server"""
