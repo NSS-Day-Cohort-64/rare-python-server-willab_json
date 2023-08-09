@@ -116,6 +116,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         if resource == 'categories':
             response = create_new_category(post_body)
             self.wfile.write(json.dumps(response).encode())
+        if resource == 'posts':
+            response = create_post(post_body)
+            self.wfile.write(json.dumps(response).encode())
 
     def do_PUT(self):
         """Handles PUT requests to the server"""
