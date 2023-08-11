@@ -3,7 +3,7 @@ from urllib.parse import urlparse, parse_qs
 import json
 from views import create_user,login_user
 from views import create_new_category, get_all_categories
-from views import get_all_posts, get_single_post, create_post
+from views import get_all_posts, get_single_post, create_post, get_posts_by_user
 from views import get_all_tags, create_new_tag
 
 
@@ -54,7 +54,6 @@ class HandleRequests(BaseHTTPRequestHandler):
 
     def do_GET(self):
         
-        success = False
         
         response = ""  # Default response
 
@@ -89,7 +88,11 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = get_all_tags()
                     success = True
         else:  # There is a ? in the path, run the query param functions
-                (resource, query) = parsed
+                (resource, query, id) = parsed
+
+                if query == 'user_id' and resource =='posts':
+                    response = get_posts_by_user(id)
+                    success = True
 
             
         if success:
