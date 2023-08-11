@@ -150,3 +150,5 @@ VALUES
         JOIN `Categories` c
             ON c.id = p.category_id
         ORDER BY publication_date DESC;
+
+DELETE FROM Posts WHERE id = 12;
